@@ -23,9 +23,13 @@ const formSchema = z.object({
 	message: z.string().min(1, { message: "Mensagem é obrigatória" }).max(255),
 });
 
-type ContactFormSchema = z.infer<typeof formSchema>;
+export type ContactFormSchema = z.infer<typeof formSchema>;
 
-export function ContactForm() {
+type ContactFormProps = {
+	onSubmit: (values: ContactFormSchema) => void;
+};
+
+export function ContactForm({ onSubmit }: ContactFormProps) {
 	const form = useForm<ContactFormSchema>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -35,13 +39,12 @@ export function ContactForm() {
 		},
 	});
 
-	function onSubmit(values: ContactFormSchema) {
-		console.log(values);
-	}
-
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="space-y-4 w-96"
+			>
 				<FormField
 					control={form.control}
 					name="name"
@@ -88,7 +91,7 @@ export function ContactForm() {
 							<FormDescription>
 								Digite sua mensagem
 							</FormDescription>
-							<FormControl>
+							<FormControl className="w-full">
 								<Textarea
 									placeholder="Insira sua mensagem aqui..."
 									{...field}

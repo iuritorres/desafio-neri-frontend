@@ -1,4 +1,4 @@
-import { ThemeProvider } from "./components/theme-provider";
+import { ThemeProvider } from "./components";
 import { Home } from "./pages/Home";
 
 export function App() {
