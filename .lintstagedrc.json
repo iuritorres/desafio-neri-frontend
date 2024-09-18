@@ -1,0 +1,10 @@
+{
+    "*.ts": [
+        "npx eslint",
+        "npx prettier --write"
+    ],
+    "*.tsx": [
+        "npx eslint",
+        "npx prettier --write"
+    ]
+}
