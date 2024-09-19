@@ -1,17 +1,39 @@
 import { ContactForm, FormsTable, ModeToggle } from "@/components";
 import { ContactFormSchema } from "@/components/contact-form";
+import { Toaster } from "@/components/ui/toaster";
 import { getForms } from "@/functions/getForms";
 import { postForm } from "@/functions/postForm";
+import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
 export function Home() {
 	const [forms, setForms] = useState<ContactFormSchema[]>([]);
+	const { toast } = useToast();
 
 	async function onSubmit(values: ContactFormSchema) {
-		await postForm(values);
-		const databaseForms = await getForms();
+		try {
+			await postForm(values);
 
-		setForms(databaseForms);
+			toast({
+				title: `Obrigado ${values.name}!`,
+				description: "Formulário enviado com sucesso.",
+			});
+		} catch (error: Error | unknown) {
+			toast({
+				title: error ? (error as Error).message : "",
+				variant: "destructive",
+			});
+		}
+
+		try {
+			const databaseForms = await getForms();
+			setForms(databaseForms);
+		} catch (error: Error | unknown) {
+			toast({
+				title: error ? (error as Error).message : "",
+				variant: "destructive",
+			});
+		}
 	}
 
 	return (
@@ -23,6 +45,8 @@ export function Home() {
 				<ContactForm onSubmit={onSubmit} />
 				<FormsTable forms={forms} />
 			</section>
+
+			<Toaster />
 		</main>
 	);
 }
