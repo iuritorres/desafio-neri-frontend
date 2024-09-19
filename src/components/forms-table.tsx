@@ -14,32 +14,40 @@ type FormsTableProps = {
 
 export function FormsTable({ forms }: FormsTableProps) {
 	return (
-		<div>
+		<div className="w-[700px]">
 			<h1 className="text-3xl font-bold my-4">Formulários enviados.</h1>
 
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead className="w-[180px]">Nome</TableHead>
-						<TableHead>Email</TableHead>
-						<TableHead>Mensagem</TableHead>
-					</TableRow>
-				</TableHeader>
+			{forms.length === 0 && (
+				<p className="text-lg text-gray-500">
+					Envie um formulário para ver os dados aqui.
+				</p>
+			)}
 
-				<TableBody>
-					{forms.map((form: ContactFormSchema, index: number) => (
-						<TableRow key={`${form.email}-${index}`}>
-							<TableCell className="font-medium">
-								{form.name}
-							</TableCell>
-							<TableCell>{form.email}</TableCell>
-							<TableCell className="max-w-96 break-words">
-								{form.message}
-							</TableCell>
+			{forms.length > 0 && (
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Nome</TableHead>
+							<TableHead>Email</TableHead>
+							<TableHead className="w-80">Mensagem</TableHead>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
+					</TableHeader>
+
+					<TableBody>
+						{forms.map((form: ContactFormSchema, index: number) => (
+							<TableRow key={`${form.email}-${index}`}>
+								<TableCell className="font-medium">
+									{form.name}
+								</TableCell>
+								<TableCell>{form.email}</TableCell>
+								<TableCell className="max-w-24 break-words">
+									{form.message}
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			)}
 		</div>
 	);
 }

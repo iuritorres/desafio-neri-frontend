@@ -15,11 +15,11 @@ export function Home() {
 	}
 
 	return (
-		<main className="p-20">
+		<main className="min-h-svh p-20">
 			<ModeToggle />
 			<h1 className="text-3xl font-bold my-4">Formulário Neri</h1>
 
-			<section className="flex w-full gap-20">
+			<section className="flex w-full gap-14">
 				<ContactForm onSubmit={onSubmit} />
 				<FormsTable forms={forms} />
 			</section>
