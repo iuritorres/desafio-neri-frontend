@@ -40,70 +40,81 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
 	});
 
 	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className="space-y-4 w-[360px]"
-			>
-				<FormField
-					control={form.control}
-					name="name"
-					render={({ field }) => (
-						<FormItem>
-							<FormDescription>Digite seu nome</FormDescription>
-							<FormControl>
-								<Input
-									placeholder="Ex.: João da Silva"
-									type="text"
-									autoComplete="name"
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+		<div>
+			<h1 className="text-3xl font-bold my-4">Formulário Neri</h1>
 
-				<FormField
-					control={form.control}
-					name="email"
-					render={({ field }) => (
-						<FormItem>
-							<FormDescription>Digite seu email</FormDescription>
-							<FormControl>
-								<Input
-									placeholder="Ex.: joao@gmail.com"
-									type="email"
-									autoComplete="email"
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit((values) => {
+						onSubmit(values);
+						form.reset();
+					})}
+					className="space-y-4 w-[360px]"
+				>
+					<FormField
+						control={form.control}
+						name="name"
+						render={({ field }) => (
+							<FormItem>
+								<FormDescription>
+									Digite seu nome
+								</FormDescription>
+								<FormControl>
+									<Input
+										placeholder="Ex.: João da Silva"
+										type="text"
+										autoComplete="name"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-				<FormField
-					control={form.control}
-					name="message"
-					render={({ field }) => (
-						<FormItem>
-							<FormDescription>
-								Digite sua mensagem
-							</FormDescription>
-							<FormControl className="w-full">
-								<Textarea
-									placeholder="Insira sua mensagem aqui..."
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+					<FormField
+						control={form.control}
+						name="email"
+						render={({ field }) => (
+							<FormItem>
+								<FormDescription>
+									Digite seu email
+								</FormDescription>
+								<FormControl>
+									<Input
+										placeholder="Ex.: joao@gmail.com"
+										type="email"
+										autoComplete="email"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-				<Button type="submit">Enviar</Button>
-			</form>
-		</Form>
+					<FormField
+						control={form.control}
+						name="message"
+						render={({ field }) => (
+							<FormItem>
+								<FormDescription>
+									Digite sua mensagem
+								</FormDescription>
+								<FormControl className="w-full">
+									<Textarea
+										placeholder="Insira sua mensagem aqui..."
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<Button type="submit">Enviar</Button>
+				</form>
+			</Form>
+		</div>
 	);
 }
